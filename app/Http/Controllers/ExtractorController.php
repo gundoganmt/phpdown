@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\Storage;
 use App\Classes\Youtube;
 use App\Classes\Facebook;
 use App\Classes\Twitter;
+use App\Classes\Instagram;
+use App\Classes\Tiktok;
 use App\Classes\Vimeo;
+use App\Classes\Vlive;
+use App\Classes\Tedtalk;
 use App\Classes\Izlesene;
 use App\Classes\SoundCloud;
 
@@ -16,17 +20,22 @@ class ExtractorController extends Controller
     public function index(Request $request)
     {
         //error_log($request->inputValue);
-        // $binPath = __DIR__ . '/../../../yt-dlp.exe';
+        // $binPath = __DIR__ . '/yt-dlp.exe';
         // $fbcookiesPath = __DIR__ . '/fbcookies.txt';
         // $vmcookiesPath = __DIR__ . '/vmcookies.txt';
-        // //$commandString = $binPath . ' ' . $request->inputValue . ' --skip-download --dump-single-json --cookies ' . $vmcookiesPath;
+        // $ttcookiesPath = __DIR__ . '/ttcookies.txt';
+        // //$commandString = $binPath . ' ' . $request->inputValue . ' --skip-download --dump-single-json -f bestvideo+bestaudio --ffmpeg-location ' . $ffmpeglocation;
         // $commandString = $binPath . ' ' . $request->inputValue . ' --skip-download --dump-single-json';
 
         // $metas = shell_exec($commandString);
 
-        // Storage::disk('local')->put('soundcloud.json', $metas);
+        // Storage::disk('local')->put('ted.json', $metas);
 
-        $meta = json_decode(Storage::get('soundcloud.json'), true);
+        // return [
+        //     'success' => true
+        // ];
+
+        $meta = json_decode(Storage::get('ted.json'), true);
 
         if($meta['extractor'] == 'youtube'){
             $yt = new Youtube();
@@ -40,6 +49,14 @@ class ExtractorController extends Controller
             $tw = new Twitter();
             $data = $tw->download($meta);
         }
+        else if($meta['extractor'] == 'Instagram'){
+            $ig = new Instagram();
+            $data = $ig->download($meta);
+        }
+        else if($meta['extractor'] == 'TikTok'){
+            $tt = new Tiktok();
+            $data = $tt->download($meta);
+        }
         else if($meta['extractor'] == 'vimeo'){
             $vm = new Vimeo();
             $data = $vm->download($meta);
@@ -48,6 +65,14 @@ class ExtractorController extends Controller
             $sc = new SoundCloud();
             $data = $sc->download($meta);
         }
+        else if($meta['extractor'] == 'vlive'){
+            $vl = new Vlive();
+            $data = $vl->download($meta);
+        }
+        else if($meta['extractor'] == 'TedTalk'){
+            $ted = new Tedtalk();
+            $data = $ted->download($meta);
+        }
         else if($meta['extractor'] == 'Izlesene'){
             $iz = new Izlesene();
             $data = $iz->download($meta);
@@ -55,7 +80,7 @@ class ExtractorController extends Controller
         
         else{
             $data = [
-                'error' => false
+                'error' => true
             ];
         }
 

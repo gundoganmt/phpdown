@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DownloadController;
-use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\ProxyController;
 use App\Http\Controllers\ExtractorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
@@ -15,8 +15,22 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/latest_downloads', [DashboardController::class, 'latest'])->name('latest');
+
+Route::get('/manage_admins', [DashboardController::class, 'manageIndex'])->name('manage_admins');
+Route::post('/manage_admins', [DashboardController::class, 'manageStore']);
+
+Route::get('/faq', [DashboardController::class, 'faqIndex'])->name('faq');
+Route::post('/faq', [DashboardController::class, 'faqStore']);
+
+
+
+Route::get('/proxy_list', [ProxyController::class, 'index'])->name('proxy_list');
+Route::post('/proxy_list', [ProxyController::class, 'store']);
+
+
+
 
 Route::post('/extractor', [ExtractorController::class, 'index'])->name('extractor');
 

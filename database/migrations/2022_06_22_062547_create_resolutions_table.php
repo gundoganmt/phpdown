@@ -18,7 +18,7 @@ class CreateResolutionsTable extends Migration
             $table->longText('download_url');
             $table->string('token', 20);
             $table->string('ext', 10);
-            $table->foreignId('video_id')->constrained();
+            $table->foreignId('video_id');
             $table->timestamps();
         });
     }

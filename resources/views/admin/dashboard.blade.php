@@ -25,22 +25,22 @@
                            <div class="icon icon-shape icon-md icon-shape-blue rounded mr-4 mr-sm-0" style="margin-right: 1.5rem;"><span class="fa fa-download"></span></div>
                            <div class="d-sm-none">
                               <h2 class="h5">Today</h2>
-                              <h3 class="mb-1"><%= total_today %></h3>
+                              <h3 class="mb-1">{{ $total_today }}</h3>
                            </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                            <div class="d-none d-sm-block">
                               <h2 class="h5">Today</h2>
-                              <h3 class="mb-1"><%= total_today %></h3>
+                              <h3 class="mb-1">{{ $total_today }}</h3>
                            </div>
                            <div class="small mt-2">
-                             <% if(rate_today >= 0) { %>
+                             @if($rate_today >= 0)
                                <span class="fas fa-angle-up text-success"></span>
-                               <span class="text-success font-weight-bold"><%= rate_today %>%</span> Since Yesterday
-                             <% } else { %>
+                               <span class="text-success font-weight-bold">{{ round($rate_today, 2) }}%</span> Since Yesterday
+                             @else
                                <span class="fas fa-angle-down text-danger"></span>
-                               <span class="text-danger font-weight-bold"><%= rate_today %>%</span> Since Yesterday
-                             <% } %>
+                               <span class="text-danger font-weight-bold">{{ round($rate_today, 2) }}%</span> Since Yesterday
+                             @endif
                            </div>
                         </div>
                      </div>
@@ -55,22 +55,22 @@
                            <div class="icon icon-shape icon-md icon-shape-blue rounded mr-4 mr-sm-0" style="margin-right: 1.5rem;"><span class="fa fa-download"></span></div>
                            <div class="d-sm-none">
                               <h2 class="h5">This Week</h2>
-                              <h3 class="mb-1"><%= total_one_week %></h3>
+                              <h3 class="mb-1">{{ $total_one_week }}</h3>
                            </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                            <div class="d-none d-sm-block">
                               <h2 class="h5">This Week</h2>
-                              <h3 class="mb-1"><%= total_one_week %></h3>
+                              <h3 class="mb-1">{{ $total_one_week }}</h3>
                            </div>
                            <div class="small mt-2">
-                             <% if(rate_week >= 0) { %>
+                             @if($rate_week >= 0)
                                <span class="fas fa-angle-up text-success"></span>
-                               <span class="text-success font-weight-bold"><%= rate_week %>%</span> Since last Week
-                             <% } else { %>
+                               <span class="text-success font-weight-bold">{{ round($rate_week, 2) }}%</span> Since last Week
+                             @else
                                <span class="fas fa-angle-down text-danger"></span>
-                               <span class="text-danger font-weight-bold"><%= rate_week %>%</span> Since last Week
-                             <% } %>
+                               <span class="text-danger font-weight-bold">{{ round($rate_week, 2) }}%</span> Since last Week
+                             @endif
                            </div>
                         </div>
                      </div>
@@ -85,22 +85,22 @@
                            <div class="icon icon-shape icon-md icon-shape-blue rounded mr-4 mr-sm-0" style="margin-right: 1.5rem;"><span class="fa fa-download"></span></div>
                            <div class="d-sm-none">
                               <h2 class="h5">This Month</h2>
-                              <h3 class="mb-1"><%= total_one_month %></h3>
+                              <h3 class="mb-1">{{ $total_one_month }}</h3>
                            </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                            <div class="d-none d-sm-block">
                               <h2 class="h5">This Month</h2>
-                              <h3 class="mb-1"><%= total_one_month %></h3>
+                              <h3 class="mb-1">{{ $total_one_month }}</h3>
                            </div>
                            <div class="small mt-2">
-                             <% if(rate_month >= 0) { %>
+                             @if($rate_month >= 0)
                                <span class="fas fa-angle-up text-success"></span>
-                               <span class="text-success font-weight-bold"><%= rate_month %>%</span> Since last month
-                             <% } else { %>
+                               <span class="text-success font-weight-bold">{{ round($rate_month, 2) }}%</span> Since last month
+                             @else 
                                <span class="fas fa-angle-down text-danger"></span>
-                               <span class="text-danger font-weight-bold"><%= rate_month %>%</span> Since last month
-                             <% } %>
+                               <span class="text-danger font-weight-bold">{{ round($rate_month, 2) }}%</span> Since last month
+                             @endif
                            </div>
                         </div>
                      </div>
@@ -112,16 +112,16 @@
                   <div class="card-header d-sm-flex flex-row align-items-center border-yellow-200 flex-0">
                      <div class="d-block mb-3 mb-sm-0">
                         <div class="fs-5 fw-normal mb-2">Number of Downloads</div>
-                        <h2 class="fs-3 fw-extrabold"><%= total_downloads %></h2>
+                        <h2 class="fs-3 fw-extrabold">{{ $total_downloads }}</h2>
                         <div class="small mt-2">
                            <span class="fw-normal me-2">Yesterday</span>
-                           <% if(rate_today >= 0) { %>
+                           @if($rate_today >= 0) 
                               <span class="fas fa-angle-up text-success"></span>
-                              <span class="text-success font-weight-bold"><%= rate_today %>%</span>
-                            <% } else { %>
+                              <span class="text-success font-weight-bold">{{ $rate_today }}%</span>
+                           @else
                               <span class="fas fa-angle-down text-danger"></span>
-                              <span class="text-danger font-weight-bold"><%= rate_today %>%</span>
-                            <% } %>
+                              <span class="text-danger font-weight-bold">{{ $rate_today }}%</span>
+                           @endif
                         </div>
                      </div>
                   </div>
@@ -155,6 +155,11 @@
             </div>
          </div>
       </main>
+      <script>
+         var data = @json($data);
+         var dates = @json($dates);
+         var source_data = @json($source_data);
+      </script>
       <script src="{{ asset('js/admin/bootstrap.min.js') }}"></script>
       <script src="{{ asset('js/admin/apexcharts.min.js') }}"></script>
       <script src="{{ asset('js/admin/sidebar.js') }}"></script>

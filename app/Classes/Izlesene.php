@@ -3,12 +3,13 @@ namespace App\Classes;
 
 use App\Models\Video;
 use Illuminate\Support\Str;
+use App\Classes\Utils;
 
 class Izlesene
 {
     public function download($meta)
     {
-        $videoStreams = array();
+        $videoStreams = collect();
 
         $video = Video::create([
             'title' => $meta['title'],
@@ -20,12 +21,12 @@ class Izlesene
         
         foreach ($meta['formats'] as $m){
             $token = Str::random(16);
-            $videoStreams[] = [
+            $videoStreams->push([
                 'resolution' => $m['format_id'],
-                'filesize' => '15.8 MB',
-                'ext' => 'mp4',
+                'filesize' => Utils::convertFileSize(Utils::getSize($m['url'])),
+                'ext' => $m['ext'],
                 'token' => $token   
-            ];
+            ]);
 
             $video->resolutions()->create([
                 'download_url' => $m['url'],
@@ -36,7 +37,7 @@ class Izlesene
 
         $context = [
             'error' => false,
-            'duration' => 'Duration: ' . '10',
+            'duration' => 'Duration: ' . date('H:i:s', $meta['duration']),
             'thumbnail' => $meta['thumbnail'],
             'title' => $meta['title'],
             'video_streams' => $videoStreams      

@@ -4,12 +4,13 @@ namespace App\Classes;
 use App\Models\Video;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Classes\Utils;
 
 class Instagram
 {
     public function download($meta)
     {
-        $videoStreams = array();
+        $videoStreams = collect();
         $imageName = Str::random(16) . '.jpg';
 
         $contents = file_get_contents($meta['thumbnail']);
@@ -28,12 +29,12 @@ class Instagram
         foreach ($meta['formats'] as $m){
             $token = Str::random(16);
             if($m['ext'] == 'mp4'){
-                $videoStreams[] = [
+                $videoStreams->push([
                     'resolution' => $m['resolution'],
-                    'filesize' => '15.8 MB',
-                    'ext' => 'mp4',
+                    'filesize' => Utils::convertFileSize(Utils::getSize($m['url'])),
+                    'ext' => $m['ext'],
                     'token' => $token   
-                ];
+                ]);
             }
 
             $video->resolutions()->create([
@@ -45,7 +46,7 @@ class Instagram
 
         $context = [
             'error' => false,
-            'duration' => 'Duration: ' . '10',
+            'duration' => 'Duration: ' . date('H:i:s', $meta['duration']),
             'thumbnail' => $thumbnail,
             'title' => $meta['title'],
             'video_streams' => $videoStreams      

@@ -3,12 +3,13 @@ namespace App\Classes;
 
 use App\Models\Video;
 use Illuminate\Support\Str;
+use App\Classes\Utils;
 
 class SoundCloud
 {
     public function download($meta)
     {
-        $audioStreams = array();
+        $audioStreams = collect();
 
         $video = Video::create([
             'title' => $meta['title'],
@@ -21,12 +22,12 @@ class SoundCloud
         foreach ($meta['formats'] as $m){
             $token = Str::random(16);
             if($m['protocol'] == 'http'){
-                $audioStreams[] = [
+                $audioStreams->push([
                     'resolution' => 'audio',
-                    'filesize' => '15.8 MB',
-                    'ext' => 'mp4',
+                    'filesize' => Utils::convertFileSize(Utils::getSize($m['url'])),
+                    'ext' => $m['ext'],
                     'token' => $token   
-                ];
+                ]);
             }
 
             $video->resolutions()->create([
@@ -38,7 +39,7 @@ class SoundCloud
 
         $context = [
             'error' => false,
-            'duration' => 'Duration: ' . '10',
+            'duration' => 'Duration: ' . date('H:i:s', $meta['duration']),
             'thumbnail' => $meta['thumbnail'],
             'title' => $meta['title'],
             'audio_streams' => $audioStreams      

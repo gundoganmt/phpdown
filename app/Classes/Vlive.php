@@ -4,12 +4,13 @@ namespace App\Classes;
 use App\Models\Video;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Classes\Utils;
 
 class Vlive
 {
     public function download($meta)
     {
-        $videoStreams = array();
+        $videoStreams = collect();
         $imageName = Str::random(16) . '.jpg';
 
         $contents = file_get_contents($meta['thumbnail']);
@@ -27,13 +28,19 @@ class Vlive
         
         foreach ($meta['formats'] as $m){
             $token = Str::random(16);
+            if(array_key_exists('filesize', $m)){
+                $filesize = $m['filesize'];
+            }
+            else{
+                $filesize = Utils::getSize($m['url']);
+            }
             if($m['protocol'] == 'http'){
-                $videoStreams[] = [
+                $videoStreams->push([
                     'resolution' => Str::of($m['format_id'])->explode('_')[1],
-                    'filesize' => '15.8 MB',
-                    'ext' => 'mp4',
+                    'filesize' => Utils::convertFileSize($filesize),
+                    'ext' => $m['ext'],
                     'token' => $token   
-                ];
+                ]);
             }
 
             $video->resolutions()->create([
@@ -45,7 +52,7 @@ class Vlive
 
         $context = [
             'error' => false,
-            'duration' => 'Duration: ' . '10',
+            'duration' => 'Duration: ' . date('H:i:s', $meta['duration']),
             'thumbnail' => $thumbnail,
             'title' => $meta['title'],
             'video_streams' => $videoStreams      

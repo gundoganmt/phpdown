@@ -10,14 +10,24 @@
       <meta name="theme-color" content="#ffffff">
       <link rel="stylesheet" href="{{ asset('css/public.css') }}" />
       <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
-      <link rel="stylesheet" href="{{ asset('css/all.min.css') }}" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-318YVD3C34"></script>
+      <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-318YVD3C34');
+      </script>
+      
    </head>
    <body class="toggle-loading preload home">
       <div id="top" class="prevent-click d-lg-none"></div>
       <nav class="navbar navbar-expand-md ">
         <div class="container">
-       <a class="navbar-brand" title="Video Downloader" href="/">indir1.net</a>
+       <a class="navbar-brand" title="Video Downloader" href="{{ route('home') }}">indir1.net</a>
        <button class="toggle-button d-lg-none" type="button" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
            <span class="fa fa-bars"></span>
        </button>
@@ -102,7 +112,7 @@
                      <div class="search-input col-lg-12 col-xl-10 mb-lg-5 m-auto" >
                         <form id="video-form" class="form-inline text-center mb-0">
                            <div class="input-group w-lg-100 w-80 mb-3 mb-lg-0 position-relative">
-                              <input type="text" name="url" class="form-control video-link" onclick="this.setSelectionRange(0, this.value.length)" placeholder="Paste video URL..." required="">
+                              <input type="text" name="download_url" class="form-control video-link" onclick="this.setSelectionRange(0, this.value.length)" placeholder="Paste video URL..." required="">
                               @if ($dw == 'youtube') 
                               <span class="social-icon fab blue fa-youtube position-absolute"></span>
                               @elseif($dw == 'facebook') 
@@ -278,14 +288,14 @@
                </div>
                <div class="col-md-12">
                   <div class="faq-container">
-                    <% faqs.forEach(f => 
+                    @foreach($faqs as $faq)
                      <div class="question">
-                        <h3 class="mb-0"><%= f.faq_q %></h3>
+                        <h3 class="mb-0">{{ $faq->question }}</h3>
                         <span class="fa fa-minus"></span>
                         <span class="fa fa-plus"></span>
-                        <p class="mt-4"><%= f.faq_ans %></p>
+                        <p class="mt-4">{{ $faq->answer }}</p>
                      </div>
-                  <% }) %>
+                    @endforeach
                   </div>
                </div>
             </div>

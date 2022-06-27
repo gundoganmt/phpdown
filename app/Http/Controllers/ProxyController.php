@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Proxy;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class ProxyController extends Controller
 {
@@ -17,7 +18,8 @@ class ProxyController extends Controller
     {
         $proxyList = Proxy::all();
         return view('admin.proxy', [
-            'proxyList' => $proxyList
+            'proxyList' => $proxyList,
+            'proxy_active' => 'active'
         ]);
     }
 
@@ -39,9 +41,21 @@ class ProxyController extends Controller
         
         return back();
     }
-}
 
-// 152.101.100.150:888:maho:pass
-// 102.111.120.150:120:sulo:word
-// 172.101.140.104:455:camo:just
-// 202.201.100.150:410:haso:password
+    public function checkProxy()
+    {
+        try{
+            $response = Http::timeout(3)->withOptions([
+                'proxy' => 'http://voaszbzh:7wblnlew11xc@45.142.28.83:8094'
+            ])->get('https://reqbin.com/echo/get/json');
+        }
+        catch(\GuzzleHttp\Exception\RequestException $e){
+            return [
+                "success" => "false"
+            ];
+        }
+
+        return $response;
+    }
+
+}

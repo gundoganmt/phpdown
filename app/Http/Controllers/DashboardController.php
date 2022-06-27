@@ -89,7 +89,8 @@ class DashboardController extends Controller
     {
         $videos = Video::all();
         return view('admin.latest_downloads', [
-            'videos' => $videos
+            'videos' => $videos->sortByDesc('created_at'),
+            'latest_active' => 'active'
         ]);
     }
 
@@ -97,7 +98,8 @@ class DashboardController extends Controller
     {
         $admins = User::all();
         return view('admin.manage_admins', [
-            'admins' => $admins
+            'admins' => $admins,
+            'manage_active' => 'active'
         ]);
     }
 
@@ -123,7 +125,8 @@ class DashboardController extends Controller
     {
         $faqs = Faq::all();
         return view('admin.faq', [
-            'faqs' => $faqs
+            'faqs' => $faqs,
+            'faq_active' => 'active'
         ]);
     }
 

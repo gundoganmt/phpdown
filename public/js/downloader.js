@@ -67,12 +67,10 @@ $(function () {
         const xhr = new XMLHttpRequest();
         var form_data = new FormData();
         
-        //var csrf_token = $('input[name="_token"]').val()
-
-        var inputValue = $(".video-link").val();
+        var download_url = $(".video-link").val();
         var url = '/extractor';
 
-        form_data.append("inputValue", inputValue);
+        form_data.append("download_url", download_url);
 
         xhr.open('POST', url)
         xhr.onload = () =>{

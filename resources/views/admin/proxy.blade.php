@@ -30,7 +30,7 @@
                   <div class="col-md-12 mb-3">
                       <div>
                         <label>Enter the Proxy list in the format: ip:port:username:password</label>
-                        <textarea class="form-control" name="proxy_list" rows="8" placeholder="102.101.100.150:username:password" required></textarea>
+                        <textarea class="form-control" name="proxy_list" rows="8" placeholder="109.85.112.150:8080:username:password" required></textarea>
                       </div>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-   <a class="navbar-brand me-lg-5" href="/">
+   <a class="navbar-brand me-lg-5" href="{{ route('home') }}">
    <img class="navbar-brand-dark" src="images/download-arrow.svg"/>
    </a>
    <div class="d-flex align-items-center">
@@ -13,11 +13,11 @@
       <div class="user-card d-flex d-md-none justify-content-between justify-content-md-center pb-4">
          <div class="d-flex align-items-center">
             <div class="avatar-lg me-4">
-               <img src="images/<%= current_user.profile_pic %>" class="card-img-top rounded-circle border-white">
+               <img src="images/{{ auth()->user()->profile_pic }}" class="card-img-top rounded-circle border-white">
             </div>
             <div class="d-block">
-               <h2 class="h5 mb-3">Hi, <%= current_user.username %></h2>
-               <a href="/logout" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
+               <h2 class="h5 mb-3">Hi, {{ auth()->user()->username }}</h2>
+               <a href="{{ route('logout') }}" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
                   <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                   </svg>
@@ -45,7 +45,7 @@
             </a>
          </li>
 
-         <li class="nav-item <% if(locals.dash_active) { %> <%= dash_active %> <% } %>">
+         <li class="nav-item @isset($dash_active) active @endisset">
             <a href="{{ route('dashboard') }}" class="nav-link d-flex align-items-center justify-content-between">
                <span>
                   <span class="sidebar-icon">
@@ -58,7 +58,7 @@
                </span>
             </a>
          </li>
-         <li class="nav-item <% if(locals.latest_active) { %> <%= latest_active %> <% } %>">
+         <li class="nav-item @isset($latest_active) active @endisset">
             <a href="{{ route('latest') }}" class="nav-link d-flex align-items-center justify-content-between">
                <span>
                   <span class="sidebar-icon">
@@ -71,7 +71,7 @@
                </span>
             </a>
          </li>
-         <li class="nav-item <% if(locals.faq_active) { %> <%= faq_active %> <% } %>">
+         <li class="nav-item @isset($faq_active) active @endisset">
             <a href="{{ route('faq') }}" class="nav-link">
                <span class="sidebar-icon">
                  <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
@@ -79,7 +79,7 @@
                <span class="sidebar-text">FAQs</span>
             </a>
          </li>
-         <li class="nav-item <% if(locals.proxy_active) { %> <%= proxy_active %> <% } %>">
+         <li class="nav-item @isset($proxy_active) active @endisset">
             <a href="{{ route('proxy_list') }}" class="nav-link">
                <span class="sidebar-icon">
                   <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg> 
@@ -87,7 +87,7 @@
                <span class="sidebar-text">Proxy List</span>
             </a>
          </li>
-         <li class="nav-item <% if(locals.manage_active) { %> <%= manage_active %> <% } %>">
+         <li class="nav-item @isset($manage_active) active @endisset">
             <a href="{{ route('manage_admins') }}" class="nav-link">
               <span class="sidebar-icon">
                 <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>

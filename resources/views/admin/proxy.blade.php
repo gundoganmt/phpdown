@@ -60,8 +60,8 @@
                         <tr id="{{ $proxy->id }}">
                             <th scope="row">{{ $proxy->ip }}</th>
                             <td>{{ $proxy->port }}</td>
-                            <td>{{ $proxy->username }}</td>
-                            <td>{{ $proxy->password }}</td>
+                            <td>**********</td>
+                            <td>**********</td>
                             <td>{{ $proxy->type }}</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary check_proxy" id="check_{{ $proxy->id }}" data-proxy-id="{{ $proxy->id }}">Check</button>
@@ -79,7 +79,7 @@
       </main>
       <script src="{{ asset('js/admin/bootstrap.min.js') }}"></script>
       <script src="{{ asset('js/admin/sidebar.js') }}"></script>
-      <script src="{{ asset('js/admin/jquery.min.js') }}jquery.min.js"></script>
+      <script src="{{ asset('js/admin/jquery.min.js') }}"></script>
       <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
       <script src="{{ asset('js/admin/handleProxy.js') }}"></script>
    </body>

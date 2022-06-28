@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       xhr.onload = () => {
         if (xhr.status == 200) {
           const result = JSON.parse(xhr.responseText);
-          if (result.success) {
+          if (result.success == 'true') {
             $('#check_'+proxy_id).text("Success")
             $('#check_'+proxy_id).css("background-color", "green");
             $('#check_'+proxy_id).css("border-color", "green");

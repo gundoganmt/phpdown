@@ -24,7 +24,7 @@ Route::post('/faq', [DashboardController::class, 'faqStore']);
 Route::get('/proxy_list', [ProxyController::class, 'index'])->name('proxy_list');
 Route::post('/proxy_list', [ProxyController::class, 'store']);
 
-Route::get('/check', [ProxyController::class, 'checkProxy']);
+Route::get('/proxy_check/{px}', [ProxyController::class, 'checkProxy']);
 
 
 Route::post('/extractor', [ExtractorController::class, 'index'])->name('extractor');

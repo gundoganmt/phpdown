@@ -42,20 +42,23 @@ class ProxyController extends Controller
         return back();
     }
 
-    public function checkProxy()
+    public function checkProxy(Proxy $px)
     {
+        $proxy = $px->type . '://' . $px->username . ':' . $px->password . '@' . $px->ip . ':' . $px->port; 
         try{
-            $response = Http::timeout(3)->withOptions([
-                'proxy' => 'http://voaszbzh:7wblnlew11xc@45.142.28.83:8094'
+            $response = Http::withOptions([
+                'proxy' => $proxy
             ])->get('https://reqbin.com/echo/get/json');
         }
-        catch(\GuzzleHttp\Exception\RequestException $e){
+        catch(\Exception $e){
             return [
                 "success" => "false"
             ];
         }
 
-        return $response;
+        return [
+            "success" => "true"
+        ];
     }
 
 }

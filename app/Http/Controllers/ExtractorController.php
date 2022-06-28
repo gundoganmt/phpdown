@@ -16,6 +16,7 @@ use App\Classes\Vlive;
 use App\Classes\Tedtalk;
 use App\Classes\Izlesene;
 use App\Classes\SoundCloud;
+use App\Models\Proxy;
 
 class ExtractorController extends Controller
 {
@@ -46,6 +47,13 @@ class ExtractorController extends Controller
         }
         else{
             $commandString = $binPath . ' ' . $request->download_url . ' --skip-download --dump-single-json';
+        }
+
+        $px = Proxy::inRandomOrder()->first();
+
+        if($px){
+            $proxy = $px->type . '://' . $px->username . ':' . $px->password . '@' . $px->ip . ':' . $px->port; 
+            $commandString = $commandString . ' --proxy ' . $proxy;
         }
 
         $meta = json_decode(shell_exec($commandString), true);

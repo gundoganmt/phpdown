@@ -21,8 +21,13 @@ class DashboardController extends Controller
             return $item->created_at->format('Y-m-d');
         });
 
-        for($i=0; $i < $dw_date->count(); $i++){
-            $data[] = $dw_date->values()[$i]->count();
+        if($dw_date->count() == 0){
+            $data[] = 0;
+        }
+        else{
+            for($i=0; $i < $dw_date->count(); $i++){
+                $data[] = $dw_date->values()[$i]->count();
+            }
         }
 
         $total_today = $data[count($data)-1] ? $data[count($data)-1]  : 0;

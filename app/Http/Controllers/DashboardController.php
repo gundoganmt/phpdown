@@ -30,8 +30,8 @@ class DashboardController extends Controller
             }
         }
 
-        $total_today = $data[count($data)-1] ? $data[count($data)-1]  : 0;
-        $total_yesterday = $data[count($data)-2] ? $data[count($data)-2]  : 0;
+        $total_today = array_sum(array_slice($data, -1));
+        $total_yesterday = array_sum(array_slice($data, -2)) - $total_today;
 
         $total_one_week = array_sum(array_slice($data, -7));
         $total_two_weeks = array_sum(array_slice($data, -14));
